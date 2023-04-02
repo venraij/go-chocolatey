@@ -1,4 +1,4 @@
-package main
+package chocolatey
 
 import (
 	"fmt"
@@ -12,16 +12,12 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-func main() {
+func Install() {
 	if !amAdmin() {
 		runMeElevated()
 	}
 
 	time.Sleep(3 * time.Second)
-	Install()
-}
-
-func Install() {
 	cmd := exec.Command("powershell", "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
