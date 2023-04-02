@@ -34,6 +34,9 @@ func InstallPackage(packageName string, args string) {
 	log.Println("Running: choco install " + packageName + " " + args)
 
 	cmd := exec.Command("choco", "install", packageName, args)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
@@ -45,6 +48,9 @@ func UninstallPackage(packageName string, args string) {
 	log.Println("Running: choco uninstall " + packageName + " " + args)
 
 	cmd := exec.Command("choco", "uninstall", packageName, args)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
@@ -56,6 +62,9 @@ func UpdatePackage(packageName string, args string) {
 	log.Println("Running: choco upgrade " + packageName + " " + args)
 
 	cmd := exec.Command("choco", "upgrade", packageName, args)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
@@ -67,6 +76,9 @@ func UpdateAllPackages(args string) {
 	log.Println("Running: choco upgrade all " + args)
 
 	cmd := exec.Command("choco", "upgrade", "all", args)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
@@ -78,6 +90,9 @@ func ListPackages(args string) {
 	log.Println("Running: choco list " + args)
 
 	cmd := exec.Command("choco", "list", args)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
@@ -89,6 +104,9 @@ func ListInstalledPackages(args string) {
 	log.Println("Running: choco list --localonly" + args)
 
 	cmd := exec.Command("choco", "list", "--localonly", args)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
@@ -100,6 +118,9 @@ func ListOutdatedPackages(args string) {
 	log.Println("Running: choco list --outdated" + args)
 
 	cmd := exec.Command("choco", "list", "--outdated", args)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
