@@ -1,10 +1,25 @@
-package chocolatey
+package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
+	"strings"
+	"syscall"
+	"time"
+
+	"golang.org/x/sys/windows"
 )
+
+func main() {
+	if !amAdmin() {
+		runMeElevated()
+	}
+
+	time.Sleep(3 * time.Second)
+	Install()
+}
 
 func Install() {
 	cmd := exec.Command("powershell", "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))")
@@ -14,7 +29,6 @@ func Install() {
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 }
 
@@ -101,5 +115,34 @@ func IsInstalled() bool {
 	if err != nil {
 		return false
 	}
+	return true
+}
+
+func runMeElevated() {
+	verb := "runas"
+	exe, _ := os.Executable()
+	cwd, _ := os.Getwd()
+	args := strings.Join(os.Args[1:], " ")
+
+	verbPtr, _ := syscall.UTF16PtrFromString(verb)
+	exePtr, _ := syscall.UTF16PtrFromString(exe)
+	cwdPtr, _ := syscall.UTF16PtrFromString(cwd)
+	argPtr, _ := syscall.UTF16PtrFromString(args)
+
+	var showCmd int32 = 1 //SW_NORMAL
+
+	err := windows.ShellExecute(0, verbPtr, exePtr, argPtr, cwdPtr, showCmd)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func amAdmin() bool {
+	_, err := os.Open("\\\\.\\PHYSICALDRIVE0")
+	if err != nil {
+		fmt.Println("admin no")
+		return false
+	}
+	fmt.Println("admin yes")
 	return true
 }
