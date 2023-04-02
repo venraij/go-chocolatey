@@ -80,3 +80,12 @@ func ListOutdatedPackages(args string) {
 		return
 	}
 }
+
+// Check if chocolatey is installed
+func IsInstalled() bool {
+	_, err := exec.LookPath("choco")
+	if err != nil {
+		return false
+	}
+	return true
+}
