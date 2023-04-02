@@ -19,6 +19,8 @@ func Install() {
 }
 
 func InstallPackage(packageName string, args string) {
+	log.Println("Running: choco install " + packageName + " " + args)
+
 	cmd := exec.Command("choco", "install", packageName, args)
 	err := cmd.Run()
 	if err != nil {
@@ -28,6 +30,8 @@ func InstallPackage(packageName string, args string) {
 }
 
 func UninstallPackage(packageName string, args string) {
+	log.Println("Running: choco uninstall " + packageName + " " + args)
+
 	cmd := exec.Command("choco", "uninstall", packageName, args)
 	err := cmd.Run()
 	if err != nil {
@@ -37,6 +41,8 @@ func UninstallPackage(packageName string, args string) {
 }
 
 func UpdatePackage(packageName string, args string) {
+	log.Println("Running: choco upgrade " + packageName + " " + args)
+
 	cmd := exec.Command("choco", "upgrade", packageName, args)
 	err := cmd.Run()
 	if err != nil {
@@ -46,6 +52,8 @@ func UpdatePackage(packageName string, args string) {
 }
 
 func UpdateAllPackages(args string) {
+	log.Println("Running: choco upgrade all " + args)
+
 	cmd := exec.Command("choco", "upgrade", "all", args)
 	err := cmd.Run()
 	if err != nil {
@@ -55,6 +63,8 @@ func UpdateAllPackages(args string) {
 }
 
 func ListPackages(args string) {
+	log.Println("Running: choco list " + args)
+
 	cmd := exec.Command("choco", "list", args)
 	err := cmd.Run()
 	if err != nil {
@@ -64,6 +74,8 @@ func ListPackages(args string) {
 }
 
 func ListInstalledPackages(args string) {
+	log.Println("Running: choco list --localonly" + args)
+
 	cmd := exec.Command("choco", "list", "--localonly", args)
 	err := cmd.Run()
 	if err != nil {
@@ -73,6 +85,8 @@ func ListInstalledPackages(args string) {
 }
 
 func ListOutdatedPackages(args string) {
+	log.Println("Running: choco list --outdated" + args)
+
 	cmd := exec.Command("choco", "list", "--outdated", args)
 	err := cmd.Run()
 	if err != nil {
